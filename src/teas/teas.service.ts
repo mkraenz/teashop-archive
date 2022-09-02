@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTeaInput } from './dto/create-tea.input';
-import { UpdateTeaInput } from './dto/update-tea.input';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class TeasService {
-  create(createTeaInput: CreateTeaInput) {
-    return 'This action adds a new tea';
+  constructor(private prisma: PrismaService) {}
+
+  create(createTeaInput: Prisma.TeaCreateInput) {
+    return this.prisma.tea.create({ data: createTeaInput });
   }
 
   findAll() {
-    return [];
+    return this.prisma.tea.findMany({ where: {} });
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} tea`;
+    return this.prisma.tea.findFirst({ where: { id } });
   }
 
-  update(id: string, updateTeaInput: UpdateTeaInput) {
-    return `This action updates a #${id} tea`;
+  update(params: {
+    where: Prisma.TeaWhereUniqueInput;
+    data: Prisma.TeaUpdateInput;
+  }) {
+    const { where, data } = params;
+    return this.prisma.tea.update({ where, data });
   }
 
   remove(id: string) {
-    return `This action removes a #${id} tea`;
+    return this.prisma.tea.delete({ where: { id } });
   }
 }

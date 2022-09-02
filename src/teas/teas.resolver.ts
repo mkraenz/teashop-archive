@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateTeaInput } from './dto/create-tea.input';
 import { TeaDto } from './dto/tea.dto';
 import { UpdateTeaInput } from './dto/update-tea.input';
@@ -9,8 +9,8 @@ export class TeasResolver {
   constructor(private readonly teasService: TeasService) {}
 
   @Mutation(() => TeaDto)
-  createTea(@Args('createTeaInput') createTeaInput: CreateTeaInput) {
-    return this.teasService.create(createTeaInput);
+  createTea(@Args('input') input: CreateTeaInput) {
+    return this.teasService.create(input);
   }
 
   @Query(() => [TeaDto], { name: 'teas' })
@@ -19,17 +19,20 @@ export class TeasResolver {
   }
 
   @Query(() => TeaDto, { name: 'tea' })
-  findOne(@Args('id') id: string) {
+  findOne(@Args('id', { type: () => ID }) id: string) {
     return this.teasService.findOne(id);
   }
 
   @Mutation(() => TeaDto)
-  updateTea(@Args('updateTeaInput') updateTeaInput: UpdateTeaInput) {
-    return this.teasService.update(updateTeaInput.id, updateTeaInput);
+  updateTea(@Args('input') input: UpdateTeaInput) {
+    return this.teasService.update({
+      where: { id: input.id },
+      data: input.toPrisma(),
+    });
   }
 
   @Mutation(() => TeaDto)
-  removeTea(@Args('id') id: string) {
+  removeTea(@Args('id', { type: () => ID }) id: string) {
     return this.teasService.remove(id);
   }
 }

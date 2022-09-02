@@ -3,28 +3,60 @@
 # ------------------------------------------------------
 
 input CreateTeaInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Ideal brewing temperature"""
+  bestAtTemperature: Int!
+  description: String!
+  imageUrl: String!
+
+  """English name of the tea"""
+  name: String!
+
+  """Price in USD"""
+  price: Float!
 }
 
 type Mutation {
-  createTea(createTeaInput: CreateTeaInput!): Tea!
-  removeTea(id: Int!): Tea!
-  updateTea(updateTeaInput: UpdateTeaInput!): Tea!
+  createTea(input: CreateTeaInput!): Tea!
+  removeTea(id: ID!): Tea!
+  updateTea(input: UpdateTeaInput!): Tea!
 }
 
 type Query {
-  tea(id: Int!): Tea!
+  tea(id: ID!): Tea!
   teas: [Tea!]!
 }
 
 type Tea {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Ideal brewing temperature"""
+  bestAtTemperature: Int!
+  currency: String!
+  description: String!
+  id: ID!
+  imageUrl: String!
+
+  """English name of the tea"""
+  name: String!
+
+  """Price in USD"""
+  price: Float!
+  rating: Int!
+  ratingCount: Int!
+
+  """freetext tags for searchability"""
+  tags: String!
 }
 
 input UpdateTeaInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  """Ideal brewing temperature"""
+  bestAtTemperature: Int
+  description: String
+  id: ID!
+  imageUrl: String
+
+  """English name of the tea"""
+  name: String
+
+  """Price in USD"""
+  price: Float
+  tags: String
 }
