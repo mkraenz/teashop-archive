@@ -9,18 +9,18 @@ export class TeasService {
   }
 
   findAll() {
-    return `This action returns all teas`;
+    return [];
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} tea`;
   }
 
-  update(id: number, updateTeaInput: UpdateTeaInput) {
+  update(id: string, updateTeaInput: UpdateTeaInput) {
     return `This action updates a #${id} tea`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} tea`;
   }
 }

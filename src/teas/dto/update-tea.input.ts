@@ -1,8 +1,11 @@
+import { Field, ID, InputType, PartialType } from '@nestjs/graphql';
 import { CreateTeaInput } from './create-tea.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateTeaInput extends PartialType(CreateTeaInput) {
-  @Field(() => Int)
-  id: number;
+  @Field(() => ID)
+  id: string;
+
+  @Field(() => String, { nullable: true })
+  tags?: string;
 }

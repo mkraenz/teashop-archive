@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TeasService } from './teas.service';
 import { TeasResolver } from './teas.resolver';
+import { TeasService } from './teas.service';
 
 @Module({
-  providers: [TeasResolver, TeasService]
+  providers: [TeasResolver, TeasService],
 })
 export class TeasModule {}
