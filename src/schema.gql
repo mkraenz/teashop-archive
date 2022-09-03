@@ -17,7 +17,7 @@ input CreateTeaInput {
 
 type Mutation {
   createTea(input: CreateTeaInput!): Tea!
-  removeTea(id: ID!): Tea!
+  removeTea(id: ID!): Boolean!
 
   """Partially update the tea"""
   updateTea(input: UpdateTeaInput!): Tea!

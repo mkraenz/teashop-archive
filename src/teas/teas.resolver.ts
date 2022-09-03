@@ -39,9 +39,10 @@ export class TeasResolver {
     return TeaDto.fromPrisma(updatedTea);
   }
 
-  @Mutation(() => TeaDto)
-  removeTea(@Args('id', { type: () => ID }) id: string) {
+  @Mutation(() => Boolean)
+  async removeTea(@Args('id', { type: () => ID }) id: string) {
     // TODO handle errors
-    return this.teasService.remove(id);
+    await this.teasService.remove(id);
+    return true;
   }
 }
