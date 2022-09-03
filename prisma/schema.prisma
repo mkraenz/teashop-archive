@@ -16,6 +16,7 @@ model Tea {
   description       String
   price             Float
   bestAtTemperature Int
+  // TODO make this into a String[]
   tags              String   @default("")
   imageUrl          String
   createdAt         DateTime @default(now())

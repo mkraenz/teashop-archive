@@ -5,6 +5,7 @@ import { PaginatedTeas } from './dto/PaginatedResult';
 import { Paging } from './dto/Paging';
 import { TeaDto } from './dto/tea.dto';
 import { TeaFilter } from './dto/TeaFilter';
+import { TeaSorting } from './dto/TeaSorting';
 import { UpdateTeaInput } from './dto/update-tea.input';
 import { TeasService } from './teas.service';
 
@@ -25,6 +26,8 @@ export class TeasResolver {
     paging: Paging = Paging.default,
     @Args('filter', { type: () => TeaFilter, nullable: true })
     filter?: TeaFilter,
+    @Args('sorting', { type: () => TeaSorting, nullable: true })
+    sorting?: TeaSorting,
   ) {
     const [teas, totalCount, totalCountFiltered] =
       await this.teasService.findAll({
@@ -42,6 +45,14 @@ export class TeasResolver {
             mode: 'insensitive',
             in: filter?.tags?.in,
           },
+        },
+        orderBy: {
+          name: sorting?.name,
+          createdAt: sorting?.createdAt,
+          id: sorting?.id,
+          description: sorting?.description,
+          price: sorting?.price,
+          bestAtTemperature: sorting?.bestAtTemperature,
         },
       });
     return PaginatedTeas.fromPrisma(teas, totalCount, totalCountFiltered);

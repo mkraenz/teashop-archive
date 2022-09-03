@@ -50,7 +50,12 @@ input Paging {
 
 type Query {
   tea(id: ID!): Tea!
-  teas(filter: TeaFilter, paging: Paging): PaginatedTeas!
+  teas(filter: TeaFilter, paging: Paging, sorting: TeaSorting): PaginatedTeas!
+}
+
+enum SortingDirection {
+  ascending
+  descending
 }
 
 type Tea {
@@ -77,6 +82,15 @@ input TeaFilter {
   ids: [String!]
   name: Filter
   tags: Filter
+}
+
+input TeaSorting {
+  bestAtTemperature: SortingDirection
+  createdAt: SortingDirection
+  description: SortingDirection
+  id: SortingDirection
+  name: SortingDirection
+  price: SortingDirection
 }
 
 input UpdateTeaInput {
