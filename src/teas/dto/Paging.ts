@@ -26,5 +26,5 @@ Hint: Use take: -4, skip: 1 to get the 4 objects before the cursor.`,
   })
   @IsOptional()
   @IsUUID()
-  fromCursorId?: string;
+  fromIdCursor?: string;
 }

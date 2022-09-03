@@ -27,7 +27,7 @@ export class TeasResolver {
     const teas = await this.teasService.findAll({
       skip: paging?.skip,
       take: paging?.take,
-      ...(paging?.fromCursorId && { cursor: { id: paging.fromCursorId } }),
+      ...(paging?.fromIdCursor && { cursor: { id: paging.fromIdCursor } }),
       where: {
         name: {
           contains: filter?.name?.contains,
