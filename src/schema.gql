@@ -23,9 +23,14 @@ type Mutation {
   updateTea(input: UpdateTeaInput!): Tea!
 }
 
+input Paging {
+  skip: Int
+  take: Int = 20
+}
+
 type Query {
   tea(id: ID!): Tea!
-  teas: [Tea!]!
+  teas(paging: Paging): [Tea!]!
 }
 
 type Tea {

@@ -10,8 +10,21 @@ export class TeasService {
     return this.prisma.tea.create({ data: createTeaInput });
   }
 
-  findAll() {
-    return this.prisma.tea.findMany({ where: {} });
+  findAll(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.TeaWhereUniqueInput;
+    where?: Prisma.TeaWhereInput;
+    orderBy?: Prisma.TeaOrderByWithRelationInput;
+  }) {
+    const { skip, take, cursor, where, orderBy } = params;
+    return this.prisma.tea.findMany({
+      skip,
+      take,
+      cursor,
+      where,
+      orderBy,
+    });
   }
 
   findOne(id: string) {

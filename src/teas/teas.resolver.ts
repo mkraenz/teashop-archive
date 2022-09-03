@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateTeaInput } from './dto/create-tea.input';
+import { Paging } from './dto/Paging';
 import { TeaDto } from './dto/tea.dto';
 import { UpdateTeaInput } from './dto/update-tea.input';
 import { TeasService } from './teas.service';
@@ -17,8 +18,13 @@ export class TeasResolver {
   }
 
   @Query(() => [TeaDto], { name: 'teas' })
-  async findAll() {
-    const teas = await this.teasService.findAll();
+  async findAll(
+    @Args('paging', { type: () => Paging, nullable: true }) paging?: Paging,
+  ) {
+    const teas = await this.teasService.findAll({
+      skip: paging?.skip,
+      take: paging?.take,
+    });
     return teas.map(TeaDto.fromPrisma);
   }
 
