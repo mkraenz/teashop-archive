@@ -1,26 +1,13 @@
-// @Entity()
-export class Tea {
-  // @PrimaryGeneratedColumn('uuid')
+import { Tea as PrismaTea } from '@prisma/client';
+
+// TODO do we really need the domain level Tea class?
+export class Tea implements PrismaTea {
   id: string;
-
-  // @Column({ length: 100 })
   name: string;
-
-  // @Column('float')
   price: number;
-
-  // @Column('integer')
   bestAtTemperature: number;
-
-  // @Column('text')
-  tags = '';
-
-  // @Column('text', {
-  //   default:
-  //     'https://images.unsplash.com/photo-1611836579732-d4dd63dc5492?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1306&q=80',
-  // })
+  tags: string;
   imageUrl: string;
-
-  // @Column('text', { default: '' })
   description: string;
+  createdAt: Date;
 }
