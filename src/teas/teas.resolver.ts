@@ -31,7 +31,9 @@ export class TeasResolver {
 
   @Mutation(() => TeaDto, { description: 'Partially update the tea' })
   async updateTea(@Args('input') input: UpdateTeaInput) {
-    // TODO handle errors
+    const tea = await this.teasService.findOne(input.id);
+    if (!tea) return new NotFoundException();
+
     const updatedTea = await this.teasService.update({
       where: { id: input.id },
       data: input.toPrisma(),
@@ -41,7 +43,9 @@ export class TeasResolver {
 
   @Mutation(() => Boolean)
   async removeTea(@Args('id', { type: () => ID }) id: string) {
-    // TODO handle errors
+    const tea = await this.teasService.findOne(id);
+    if (!tea) return new NotFoundException();
+
     await this.teasService.remove(id);
     return true;
   }
