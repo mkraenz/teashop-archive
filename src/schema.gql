@@ -28,7 +28,15 @@ type Mutation {
   updateTea(input: UpdateTeaInput!): Tea!
 }
 
+"""
+For an explanation of Offset Pagination vs Cursor-based pagination, see https://www.prisma.io/docs/concepts/components/prisma-client/pagination
+"""
 input Paging {
+  """
+  Hint: Use skip: 1 to exclude the object at the cursor.
+  Hint: Use take: -4, skip: 1 to get the 4 objects before the cursor.
+  """
+  fromCursorId: String
   skip: Int
   take: Int = 20
 }
