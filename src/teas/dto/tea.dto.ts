@@ -6,7 +6,7 @@ import {
   IsUUID,
   Length,
 } from '@nestjs/class-validator';
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 import { Tea } from '@prisma/client';
 
 @ObjectType('Tea')
@@ -15,12 +15,12 @@ export class TeaDto {
   @IsUUID()
   id: string;
 
-  @Field({ description: 'English name of the tea' })
+  @Field(() => String, { description: 'English name of the tea' })
   @IsString()
   @Length(3, 200)
   name: string;
 
-  @Field({ description: 'Price in USD' })
+  @Field(() => Float, { description: 'Price in USD' })
   @IsNumber({ maxDecimalPlaces: 2 })
   price: number;
 
@@ -34,10 +34,10 @@ export class TeaDto {
   @IsString()
   tags: string;
 
-  @Field()
+  @Field(() => String)
   currency: string = 'EUR';
 
-  @Field()
+  @Field(() => String)
   @IsUrl()
   imageUrl: string;
 
@@ -49,7 +49,7 @@ export class TeaDto {
   @Field(() => Int)
   ratingCount: number = 8;
 
-  @Field()
+  @Field(() => String)
   @IsString()
   @Length(5)
   description: string;

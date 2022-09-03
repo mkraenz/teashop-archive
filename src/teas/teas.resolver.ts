@@ -3,6 +3,7 @@ import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateTeaInput } from './dto/create-tea.input';
 import { Paging } from './dto/Paging';
 import { TeaDto } from './dto/tea.dto';
+import { TeaFilter } from './dto/TeaFilter';
 import { UpdateTeaInput } from './dto/update-tea.input';
 import { TeasService } from './teas.service';
 
@@ -20,10 +21,24 @@ export class TeasResolver {
   @Query(() => [TeaDto], { name: 'teas' })
   async findAll(
     @Args('paging', { type: () => Paging, nullable: true }) paging?: Paging,
+    @Args('filter', { type: () => TeaFilter, nullable: true })
+    filter?: TeaFilter,
   ) {
     const teas = await this.teasService.findAll({
       skip: paging?.skip,
       take: paging?.take,
+      where: {
+        name: {
+          contains: filter?.name?.contains,
+          mode: 'insensitive',
+          in: filter?.name?.in,
+        },
+        tags: {
+          contains: filter?.tags?.contains,
+          mode: 'insensitive',
+          in: filter?.tags?.in,
+        },
+      },
     });
     return teas.map(TeaDto.fromPrisma);
   }

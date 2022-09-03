@@ -15,6 +15,11 @@ input CreateTeaInput {
   price: Float!
 }
 
+input Filter {
+  contains: String
+  in: [String!]
+}
+
 type Mutation {
   createTea(input: CreateTeaInput!): Tea!
   removeTea(id: ID!): Boolean!
@@ -30,7 +35,7 @@ input Paging {
 
 type Query {
   tea(id: ID!): Tea!
-  teas(paging: Paging): [Tea!]!
+  teas(filter: TeaFilter, paging: Paging): [Tea!]!
 }
 
 type Tea {
@@ -51,6 +56,12 @@ type Tea {
 
   """freetext tags for searchability"""
   tags: String!
+}
+
+input TeaFilter {
+  ids: [String!]
+  name: Filter
+  tags: Filter
 }
 
 input UpdateTeaInput {
