@@ -32,7 +32,7 @@ type PaginatedTeas {
   cursor: String
   data: [Tea!]!
   totalCount: Int!
-  totalCountOfQuery: Int!
+  totalCountFiltered: Int!
 }
 
 """

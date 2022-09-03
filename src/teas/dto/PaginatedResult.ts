@@ -21,17 +21,17 @@ export class PaginatedTeas implements PaginatedResult<TeaDto> {
   totalCount: number;
 
   @Field(() => Int)
-  totalCountOfQuery: number;
+  totalCountFiltered: number;
 
   static fromPrisma(
     teas: Tea[],
     totalCount: number,
-    totalCountOfQuery: number,
+    totalCountFiltered: number,
   ) {
     const result = new PaginatedTeas();
     result.data = teas.map(TeaDto.fromPrisma);
     result.totalCount = totalCount;
-    result.totalCountOfQuery = totalCountOfQuery;
+    result.totalCountFiltered = totalCountFiltered;
     result.cursor = last(teas)?.id;
     return result;
   }

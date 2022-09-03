@@ -26,7 +26,7 @@ export class TeasResolver {
     @Args('filter', { type: () => TeaFilter, nullable: true })
     filter?: TeaFilter,
   ) {
-    const [teas, totalCount, totalCountOfQuery] =
+    const [teas, totalCount, totalCountFiltered] =
       await this.teasService.findAll({
         skip: paging.skip,
         take: paging.take,
@@ -44,7 +44,7 @@ export class TeasResolver {
           },
         },
       });
-    return PaginatedTeas.fromPrisma(teas, totalCount, totalCountOfQuery);
+    return PaginatedTeas.fromPrisma(teas, totalCount, totalCountFiltered);
   }
 
   @Query(() => TeaDto, { name: 'tea' })

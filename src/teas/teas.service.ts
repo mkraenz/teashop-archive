@@ -18,7 +18,7 @@ export class TeasService {
     orderBy?: Prisma.TeaOrderByWithRelationInput;
   }) {
     const { skip, take, cursor, where, orderBy } = params;
-    const [totalCount, totalCountOfQuery, teas] =
+    const [totalCount, totalCountFiltered, teas] =
       await this.prisma.$transaction([
         this.prisma.tea.count(),
         this.prisma.tea.count({ where }),
@@ -30,7 +30,7 @@ export class TeasService {
           orderBy,
         }),
       ]);
-    return [teas, totalCount, totalCountOfQuery] as const;
+    return [teas, totalCount, totalCountFiltered] as const;
   }
 
   findOne(id: string) {
