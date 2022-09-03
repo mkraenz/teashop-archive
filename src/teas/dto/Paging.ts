@@ -27,4 +27,11 @@ Hint: Use take: -4, skip: 1 to get the 4 objects before the cursor.`,
   @IsOptional()
   @IsUUID()
   fromIdCursor?: string;
+
+  static get default() {
+    const paging = new Paging();
+    paging.skip = 0;
+    paging.take = 20;
+    return paging;
+  }
 }

@@ -28,6 +28,13 @@ type Mutation {
   updateTea(input: UpdateTeaInput!): Tea!
 }
 
+type PaginatedTeas {
+  cursor: String
+  data: [Tea!]!
+  totalCount: Int!
+  totalCountOfQuery: Int!
+}
+
 """
 For an explanation of Offset Pagination vs Cursor-based pagination, see https://www.prisma.io/docs/concepts/components/prisma-client/pagination
 """
@@ -43,7 +50,7 @@ input Paging {
 
 type Query {
   tea(id: ID!): Tea!
-  teas(filter: TeaFilter, paging: Paging): [Tea!]!
+  teas(filter: TeaFilter, paging: Paging): PaginatedTeas!
 }
 
 type Tea {

@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateTeaInput } from './dto/create-tea.input';
+import { PaginatedTeas } from './dto/PaginatedResult';
 import { Paging } from './dto/Paging';
 import { TeaDto } from './dto/tea.dto';
 import { TeaFilter } from './dto/TeaFilter';
@@ -18,30 +19,32 @@ export class TeasResolver {
     return TeaDto.fromPrisma(createdTea);
   }
 
-  @Query(() => [TeaDto], { name: 'teas' })
+  @Query(() => PaginatedTeas, { name: 'teas' })
   async findAll(
-    @Args('paging', { type: () => Paging, nullable: true }) paging?: Paging,
+    @Args('paging', { type: () => Paging, nullable: true })
+    paging: Paging = Paging.default,
     @Args('filter', { type: () => TeaFilter, nullable: true })
     filter?: TeaFilter,
   ) {
-    const teas = await this.teasService.findAll({
-      skip: paging?.skip,
-      take: paging?.take,
-      ...(paging?.fromIdCursor && { cursor: { id: paging.fromIdCursor } }),
-      where: {
-        name: {
-          contains: filter?.name?.contains,
-          mode: 'insensitive',
-          in: filter?.name?.in,
+    const [teas, totalCount, totalCountOfQuery] =
+      await this.teasService.findAll({
+        skip: paging.skip,
+        take: paging.take,
+        ...(paging?.fromIdCursor && { cursor: { id: paging.fromIdCursor } }),
+        where: {
+          name: {
+            contains: filter?.name?.contains,
+            mode: 'insensitive',
+            in: filter?.name?.in,
+          },
+          tags: {
+            contains: filter?.tags?.contains,
+            mode: 'insensitive',
+            in: filter?.tags?.in,
+          },
         },
-        tags: {
-          contains: filter?.tags?.contains,
-          mode: 'insensitive',
-          in: filter?.tags?.in,
-        },
-      },
-    });
-    return teas.map(TeaDto.fromPrisma);
+      });
+    return PaginatedTeas.fromPrisma(teas, totalCount, totalCountOfQuery);
   }
 
   @Query(() => TeaDto, { name: 'tea' })

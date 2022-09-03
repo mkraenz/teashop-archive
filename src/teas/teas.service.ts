@@ -10,7 +10,7 @@ export class TeasService {
     return this.prisma.tea.create({ data: createTeaInput });
   }
 
-  findAll(params: {
+  async findAll(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.TeaWhereUniqueInput;
@@ -18,13 +18,19 @@ export class TeasService {
     orderBy?: Prisma.TeaOrderByWithRelationInput;
   }) {
     const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.tea.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
+    const [totalCount, totalCountOfQuery, teas] =
+      await this.prisma.$transaction([
+        this.prisma.tea.count(),
+        this.prisma.tea.count({ where }),
+        this.prisma.tea.findMany({
+          skip,
+          take,
+          cursor,
+          where,
+          orderBy,
+        }),
+      ]);
+    return [teas, totalCount, totalCountOfQuery] as const;
   }
 
   findOne(id: string) {
