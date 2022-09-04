@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Public } from '../auth/public.decorator';
 import { CreateTeaInput } from './dto/create-tea.input';
 import { PaginatedTeas } from './dto/PaginatedResult';
 import { Paging } from './dto/Paging';
@@ -20,6 +21,7 @@ export class TeasResolver {
     return TeaDto.fromPrisma(createdTea);
   }
 
+  @Public()
   @Query(() => PaginatedTeas, { name: 'teas' })
   async findAll(
     @Args('paging', { type: () => Paging, nullable: true })
@@ -58,6 +60,7 @@ export class TeasResolver {
     return PaginatedTeas.fromPrisma(teas, totalCount, totalCountFiltered);
   }
 
+  @Public()
   @Query(() => TeaDto, { name: 'tea' })
   async findOne(@Args('id', { type: () => ID }) id: string) {
     const tea = await this.teasService.findOne(id);
