@@ -6,7 +6,14 @@ import {
   IsUUID,
   Length,
 } from '@nestjs/class-validator';
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
+import {
+  Field,
+  Float,
+  GraphQLISODateTime,
+  ID,
+  Int,
+  ObjectType,
+} from '@nestjs/graphql';
 import { Tea } from '@prisma/client';
 
 @ObjectType('Tea')
@@ -53,6 +60,12 @@ export class TeaDto {
   @IsString()
   @Length(5)
   description: string;
+
+  @Field(() => GraphQLISODateTime)
+  createdAt: Date;
+
+  @Field(() => GraphQLISODateTime)
+  updatedAt: Date;
 
   /** Do not use this directly. Only use the Tea,from* factory methods.
    * This is only public to work with PickType etc. */
