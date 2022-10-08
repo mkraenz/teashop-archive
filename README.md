@@ -42,3 +42,9 @@ $ npm run test:cov
 npx prisma format
 npx prisma migrate dev --name <NAME>
 ```
+
+### GUI
+
+```sh
+npx prisma studio
+```

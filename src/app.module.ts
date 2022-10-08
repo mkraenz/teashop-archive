@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
 import { TeasModule } from './teas/teas.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { TeasModule } from './teas/teas.module';
       inject: [ConfigService],
     }),
     TeasModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

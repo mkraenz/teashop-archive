@@ -20,5 +20,13 @@ model Tea {
   tags              String   @default("")
   imageUrl          String
   createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
+}
+
+model User {
+  id        String @id @default(uuid())
+  firstname String
+  lastname  String
+  email     String
+  address   Json
 }

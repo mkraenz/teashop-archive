@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AddressDto {
+  city: String!
+  country: String!
+  street: String!
+  zip: String!
+}
+
 input CreateTeaInput {
   """Ideal brewing temperature"""
   bestAtTemperature: Int!
@@ -13,6 +20,13 @@ input CreateTeaInput {
 
   """Price in USD"""
   price: Float!
+}
+
+input CreateUserInput {
+  address: UserAddressInput!
+  email: String!
+  firstname: String!
+  lastname: String!
 }
 
 """
@@ -27,10 +41,13 @@ input Filter {
 
 type Mutation {
   createTea(input: CreateTeaInput!): Tea!
+  createUser(input: CreateUserInput!): UserDto!
   removeTea(id: ID!): Boolean!
+  removeUser(id: ID!): UserDto!
 
   """Partially update the tea"""
   updateTea(input: UpdateTeaInput!): Tea!
+  updateUser(input: UpdateUserInput!): UserDto!
 }
 
 type PaginatedTeas {
@@ -56,6 +73,8 @@ input Paging {
 type Query {
   tea(id: ID!): Tea!
   teas(filter: TeaFilter, paging: Paging, sorting: TeaSorting): PaginatedTeas!
+  user(id: ID!): UserDto!
+  users: [UserDto!]!
 }
 
 enum SortingDirection {
@@ -113,4 +132,27 @@ input UpdateTeaInput {
   """Price in USD"""
   price: Float
   tags: String
+}
+
+input UpdateUserInput {
+  address: UserAddressInput
+  email: String
+  firstname: String
+  id: String!
+  lastname: String
+}
+
+input UserAddressInput {
+  city: String!
+  country: String!
+  street: String!
+  zip: String!
+}
+
+type UserDto {
+  address: AddressDto!
+  email: String!
+  firstname: String!
+  id: String!
+  lastname: String!
 }

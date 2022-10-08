@@ -6,8 +6,8 @@ import { PrismaService } from '../prisma/prisma.service';
 export class TeasService {
   constructor(private prisma: PrismaService) {}
 
-  create(createTeaInput: Prisma.TeaCreateInput) {
-    return this.prisma.tea.create({ data: createTeaInput });
+  create(input: Prisma.TeaCreateInput) {
+    return this.prisma.tea.create({ data: input });
   }
 
   async findAll(params: {

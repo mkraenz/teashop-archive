@@ -79,7 +79,7 @@ export class TeaDto {
     imageUrl: string;
     createdAt: Date;
   }) {
-    // GraphQL already handles that we do not accidentally expose too much data.
+    // GraphQL already handles that we do not accidentally expose or assign too much data.
     Object.assign(this, data);
   }
 
